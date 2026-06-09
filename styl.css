@@ -1,1 +1,182 @@
-css code
+/* Core Reset and Variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --bg-gradient: linear-gradient(135deg, #0f172a, #1e1b4b); /* Deep midnight dark */
+    --card-bg: rgba(30, 41, 59, 0.7); /* Translucent dark slate */
+    --accent-color: #10b981; /* Refreshing Mint Green */
+    --accent-hover: #059669;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --danger-color: #ef4444;
+}
+
+body {
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-main);
+    overflow: hidden;
+}
+
+/* Container & Layout */
+.quiz-container {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.screen {
+    display: none;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Header & Timer */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+#timer {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    transition: all 0.3s ease;
+}
+
+#timer.warning {
+    animation: pulse 1s infinite;
+    background: var(--danger-color);
+    color: white;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    background: rgba(255, 255, 255, 0.1);
+    height: 6px;
+    border-radius: 3px;
+    width: 100%;
+    overflow: hidden;
+}
+
+#progress-bar {
+    background: var(--accent-color);
+    height: 100%;
+    width: 0%;
+    transition: width 0.4s ease;
+}
+
+#question-text {
+    font-size: 1.4rem;
+    margin: 1rem 0;
+    text-align: left;
+    line-height: 1.4;
+}
+
+/* Options Options */
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.option-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    padding: 1rem;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    transition: all 0.2s ease;
+}
+
+.option-btn:hover:not([disabled]) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--text-muted);
+    transform: translateX(5px);
+}
+
+/* States for choices */
+.option-btn.correct {
+    background: rgba(16, 185, 129, 0.2) !important;
+    border-color: var(--accent-color) !important;
+    color: #34d399;
+}
+
+.option-btn.wrong {
+    background: rgba(239, 68, 68, 0.2) !important;
+    border-color: var(--danger-color) !important;
+    color: #f87171;
+}
+
+/* Buttons */
+.btn {
+    background: var(--accent-color);
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: center;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+    background: var(--accent-hover);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Score Display Screen */
+.score-display {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    margin: 1rem 0;
+}
+
+#score-comment {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* Animations */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
