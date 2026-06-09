@@ -1,1 +1,51 @@
-html code here
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Quiz Challenge</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <h1>Welcome to the Quiz!</h1>
+            <p>5 Questions. 20 seconds each. Can you score 500 points?</p>
+            <button id="start-btn" class="btn">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <span id="question-number">Question 1/5</span>
+                <div id="timer">Time: 20s</div>
+            </div>
+            
+            <div class="progress-bar-container">
+                <div id="progress-bar"></div>
+            </div>
+
+            <h2 id="question-text">Question text goes here?</h2>
+            
+            <div id="options-container" class="options-grid">
+                <!-- Options will be injected by JavaScript -->
+            </div>
+
+            <button id="next-btn" class="btn hidden">Next Question</button>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen">
+            <h1>Quiz Completed!</h1>
+            <div class="score-display">
+                <span id="final-score">0</span> / 500
+            </div>
+            <p id="score-comment"></p>
+            <button id="restart-btn" class="btn">Try Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>html code here
