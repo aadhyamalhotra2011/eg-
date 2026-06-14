@@ -1,54 +1,187 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Quiz Challenge</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Coiny&display=swap" rel="stylesheet">
+    <title>Quiz Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background: white;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        img {
+            width: 250px;
+            height: 150px;
+            border-radius: 10px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            margin: 8px 0;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #nextBtn, #restartBtn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #score {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <!-- Start Screen -->
-        <div id="start-screen" class="screen active">
-            <h1>Welcome to the Quiz!</h1>
-            <p>5 Questions. 20 seconds each. Can you score 500 points?</p>
-            <button id="start-btn" class="btn">Start Quiz</button>
-        </div>
 
-        <!-- Quiz Screen -->
-        <div id="quiz-screen" class="screen">
-            <div class="quiz-header">
-                <span id="question-number">Question 1/5</span>
-                <div id="timer">Time: 20s</div>
-            </div>
-            
-            <div class="progress-bar-container">
-                <div id="progress-bar"></div>
-            </div>
+<div class="quiz-container">
+    <h1>General Knowledge Quiz</h1>
 
-            <h2 id="question-text">Question text goes here?</h2>
-            
-            <div id="options-container" class="options-grid">
-                <!-- Options will be injected by JavaScript -->
-            </div>
+    <p id="score">Score: 0</p>
 
-            <button id="next-btn" class="btn hidden">Next Question</button>
-        </div>
+    <img id="questionImage" src="" alt="Question Image">
 
-        <!-- Result Screen -->
-        <div id="result-screen" class="screen">
-            <h1>Quiz Completed!</h1>
-            <div class="score-display">
-                <span id="final-score">0</span> / 500
-            </div>
-            <p id="score-comment"></p>
-            <button id="restart-btn" class="btn">Try Again</button>
-        </div>
-    </div>
+    <h2 id="question"></h2>
 
-    <script src="script.js"></script>
+    <div id="answers"></div>
+
+    <button id="nextBtn">Next Question</button>
+    <button id="restartBtn">Restart Quiz</button>
+</div>
+
+<script>
+const quizData = [
+{
+question: "What is the capital of India?",
+image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da",
+answers: ["Mumbai", "Delhi", "Kolkata", "Chennai"],
+correct: "Delhi"
+},
+{
+question: "Which planet is known as the Red Planet?",
+image: "https://images.unsplash.com/photo-1614728263952-84ea256f9679",
+answers: ["Earth", "Mars", "Venus", "Jupiter"],
+correct: "Mars"
+},
+{
+question: "How many continents are there?",
+image: "",
+answers: ["5", "6", "7", "8"],
+correct: "7"
+},
+{
+question: "Which animal is called the King of the Jungle?",
+image: "",
+answers: ["Tiger", "Elephant", "Lion", "Bear"],
+correct: "Lion"
+},
+{
+question: "What is 5 + 7?",
+image: "",
+answers: ["10", "11", "12", "13"],
+correct: "12"
+},
+{
+question: "Which is the largest ocean?",
+image: "",
+answers: ["Atlantic", "Pacific", "Indian", "Arctic"],
+correct: "Pacific"
+},
+{
+question: "What color is the sky on a clear day?",
+image: "",
+answers: ["Blue", "Green", "Red", "Yellow"],
+correct: "Blue"
+},
+{
+question: "Which bird cannot fly?",
+image: "",
+answers: ["Parrot", "Crow", "Penguin", "Sparrow"],
+correct: "Penguin"
+},
+{
+question: "How many days are in a week?",
+image: "",
+answers: ["5", "6", "7", "8"],
+correct: "7"
+},
+{
+question: "Which is the national animal of India?",
+image: "",
+answers: ["Lion", "Tiger", "Elephant", "Leopard"],
+correct: "Tiger"
+}
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const scoreEl = document.getElementById("score");
+const imageEl = document.getElementById("questionImage");
+
+function loadQuestion() {
+    const q = quizData[currentQuestion];
+
+    questionEl.textContent = q.question;
+    answersEl.innerHTML = "";
+
+    imageEl.src = q.image || "";
+    imageEl.style.display = q.image ? "block" : "none";
+
+    q.answers.forEach(answer => {
+        const btn = document.createElement("button");
+        btn.textContent = answer;
+
+        btn.onclick = () => {
+            if(answer === q.correct) {
+                score++;
+                scoreEl.textContent = "Score: " + score;
+            }
+
+            Array.from(answersEl.children).forEach(button => {
+                button.disabled = true;
+            });
+        };
+
+        answersEl.appendChild(btn);
+    });
+}
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+    currentQuestion++;
+
+    if(currentQuestion < quizData.length) {
+        loadQuestion();
+    } else {
+        questionEl.textContent = "Quiz Finished!";
+        answersEl.innerHTML = "";
+        imageEl.style.display = "none";
+    }
+});
+
+document.getElementById("restartBtn").addEventListener("click", () => {
+    currentQuestion = 0;
+    score = 0;
+    scoreEl.textContent = "Score: 0";
+    loadQuestion();
+});
+
+loadQuestion();
+</script>
+
 </body>
 </html>
